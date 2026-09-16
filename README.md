@@ -1,4 +1,4 @@
-# NusaMart — GitHub Pages Marketplace
+# PIDOO.STOREE — GitHub Pages Marketplace
 
 Website marketplace front-end yang siap di-upload ke GitHub Pages.
 
