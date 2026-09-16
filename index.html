@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NusaMart - platform jual beli modern, cepat, aman, dan nyaman." />
+  <title>NusaMart — Marketplace Lokal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <div class="topbar">🚚 Gratis ongkir untuk pesanan tertentu <span>•</span> 🔒 Transaksi lebih nyaman dengan perlindungan pembeli</div>
+
+  <header class="header">
+    <div class="container nav">
+      <a href="#" class="brand"><span class="brand-mark">N</span><span>Nusa<span class="accent">Mart</span></span></a>
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input id="searchInput" type="search" placeholder="Cari barang, kategori, atau toko..." aria-label="Cari produk" />
+        <button id="searchBtn" class="search-btn">Cari</button>
+      </div>
+      <div class="nav-actions">
+        <button class="icon-btn" title="Favorit">♡</button>
+        <button id="cartBtn" class="cart-btn">🛒 <span>Keranjang</span><b id="cartCount">0</b></button>
+        <button class="sell-btn">＋ Jual Barang</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <span class="eyebrow">MARKETPLACE PILIHANMU</span>
+          <h1>Belanja lebih <span>seru.</span><br>Jual lebih <span>mudah.</span></h1>
+          <p>Temukan barang favorit dari seller pilihan. Semua lebih praktis, transparan, dan terasa dekat.</p>
+          <div class="hero-cta">
+            <a class="primary-btn" href="#products">Mulai Belanja <span>→</span></a>
+            <a class="ghost-btn" href="#why">Kenapa NusaMart?</a>
+          </div>
+          <div class="trust-row">
+            <div><strong>10K+</strong><small>Produk aktif</small></div>
+            <div><strong>4.9/5</strong><small>Rating pembeli</small></div>
+            <div><strong>24/7</strong><small>Bantuan pelanggan</small></div>
+          </div>
+        </div>
+        <div class="hero-card">
+          <div class="floating-tag tag-one">🔥 Flash Sale</div>
+          <div class="product-visual">
+            <div class="orb"></div>
+            <div class="shoe">👟</div>
+          </div>
+          <div class="hero-product-info">
+            <div><span class="mini-label">TRENDING HARI INI</span><h3>Urban Runner Sneakers</h3></div>
+            <div class="hero-price">Rp279.000</div>
+          </div>
+          <div class="progress"><span></span></div>
+          <div class="hero-foot"><small>Terjual 84%</small><small>Hemat hingga Rp120K</small></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section category-section">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">JELAJAHI</span><h2>Kategori populer</h2></div><button class="text-link" data-category="Semua">Lihat semua →</button></div>
+        <div class="categories" id="categories">
+          <button class="category active" data-category="Semua"><span>✨</span><b>Semua</b></button>
+          <button class="category" data-category="Fashion"><span>👕</span><b>Fashion</b></button>
+          <button class="category" data-category="Elektronik"><span>🎧</span><b>Elektronik</b></button>
+          <button class="category" data-category="Rumah"><span>🪴</span><b>Rumah</b></button>
+          <button class="category" data-category="Kecantikan"><span>💄</span><b>Kecantikan</b></button>
+          <button class="category" data-category="Hobi"><span>🎮</span><b>Hobi</b></button>
+          <button class="category" data-category="Makanan"><span>🍪</span><b>Makanan</b></button>
+          <button class="category" data-category="Anak"><span>🧸</span><b>Anak</b></button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section products-section" id="products">
+      <div class="container">
+        <div class="section-head"><div><span class="eyebrow">PILIHAN HARI INI</span><h2>Produk yang mungkin kamu suka</h2></div><div class="sort-wrap"><label for="sortSelect">Urutkan</label><select id="sortSelect"><option value="default">Rekomendasi</option><option value="low">Harga terendah</option><option value="high">Harga tertinggi</option><option value="rating">Rating tertinggi</option></select></div></div>
+        <div id="productGrid" class="product-grid"></div>
+        <div id="emptyState" class="empty hidden"><div>🔎</div><h3>Produk tidak ditemukan</h3><p>Coba kata kunci atau kategori lain.</p></div>
+      </div>
+    </section>
+
+    <section class="section banner-section" id="why">
+      <div class="container benefits">
+        <div class="benefit-main"><span class="eyebrow">KENAPA NUSAMART?</span><h2>Pengalaman jual beli yang terasa <span>lebih manusiawi.</span></h2><p>Kami menggabungkan kemudahan marketplace dengan nuansa toko lokal: jelas, ramah, dan fokus pada kepercayaan.</p><a href="#products" class="primary-btn">Belanja sekarang →</a></div>
+        <div class="benefit-list">
+          <div class="benefit"><span class="benefit-icon">🛡️</span><div><h3>Perlindungan pembeli</h3><p>Detail produk dan ulasan ditampilkan dengan jelas sebelum checkout.</p></div></div>
+          <div class="benefit"><span class="benefit-icon">⚡</span><div><h3>Checkout cepat</h3><p>Alur sederhana supaya pelanggan tidak berputar-putar saat membeli.</p></div></div>
+          <div class="benefit"><span class="benefit-icon">💬</span><div><h3>Seller lebih dekat</h3><p>Bangun hubungan dengan pelanggan lewat komunikasi yang mudah.</p></div></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section seller-section">
+      <div class="container seller-card">
+        <div><span class="eyebrow">UNTUK SELLER</span><h2>Punya barang bagus?</h2><p>Buka toko sendiri dan mulai dapatkan pelanggan pertamamu.</p></div>
+        <button class="primary-btn" id="sellCta">Buka toko gratis <span>→</span></button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-grid">
+      <div><a href="#" class="brand footer-brand"><span class="brand-mark">N</span><span>Nusa<span class="accent">Mart</span></span></a><p>Marketplace lokal untuk barang pilihan, seller kreatif, dan pengalaman belanja yang lebih nyaman.</p></div>
+      <div><h4>Marketplace</h4><a href="#products">Produk</a><a href="#products">Kategori</a><a href="#why">Keunggulan</a></div>
+      <div><h4>Bantuan</h4><a href="#">Pusat Bantuan</a><a href="#">Cara Belanja</a><a href="#">Cara Jualan</a></div>
+      <div><h4>Ikuti kami</h4><div class="socials"><span>IG</span><span>TT</span><span>WA</span></div><small>© 2026 NusaMart</small></div>
+    </div>
+  </footer>
+
+  <div id="modal" class="modal hidden" aria-hidden="true"><div class="modal-backdrop"></div><div class="modal-card" role="dialog" aria-modal="true"><button id="modalClose" class="modal-close">×</button><div id="modalContent"></div></div></div>
+
+  <div id="toast" class="toast"></div>
+  <script src="js/app.js"></script>
+</body>
+</html>
