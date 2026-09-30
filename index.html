@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thriftie Trip – Thrift Lucu dari Seluruh Dunia</title>
+<meta name="description" content="Baju thrift pilihan dari Jepang, Korea, Amerika, dan Inggris. Imut, unik, satu-satunya.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🧸</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="top">
+  <a href="#" class="logo">🧸 Thriftie Trip</a>
+  <nav>
+    <a href="#koleksi">Koleksi</a>
+    <a href="#cara">Cara belanja</a>
+  </nav>
+  <div class="actions">
+    <button class="pill" id="btnAuth">Masuk</button>
+    <button class="pill cart" id="btnCart" aria-label="Buka keranjang">🛍️ <span id="cartCount">0</span></button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-text">
+    <h1>Baju thrift dari 4 negara, sampai di depan pintumu.</h1>
+    <p>Tiap potong dipilih tangan, dicuci bersih, dan cuma ada satu. Kalau kamu suka, jangan lama-lama ya.</p>
+    <div class="cta">
+      <a class="btn" href="#koleksi">Lihat koleksi</a>
+      <a class="btn ghost" href="#cara">Cara belanja</a>
+    </div>
+  </div>
+  <div class="tags" aria-hidden="true">
+    <div class="tag t1"><b>🇯🇵 Tokyo</b><span>Cardigan pastel</span></div>
+    <div class="tag t2"><b>🇰🇷 Seoul</b><span>Rok pita</span></div>
+    <div class="tag t3"><b>🇺🇸 LA</b><span>Jaket varsity</span></div>
+    <div class="tag t4"><b>🇬🇧 London</b><span>Scarf rajut</span></div>
+  </div>
+</section>
+
+<section class="strip">
+  <span>✨ Kondisi dicek satu per satu</span>
+  <span>🧼 Sudah dicuci &amp; disteril</span>
+  <span>📦 Dikirim ke seluruh Indonesia</span>
+  <span>💖 Stok cuma 1 per model</span>
+</section>
+
+<main id="koleksi">
+  <h2>Koleksi minggu ini</h2>
+  <div class="tools">
+    <div class="chips" id="chips"></div>
+    <input id="search" type="search" placeholder="Cari baju, misal: cardigan" aria-label="Cari produk">
+  </div>
+  <div class="grid" id="grid"></div>
+  <p class="empty" id="empty" hidden>Belum ada yang cocok. Coba kata lain atau pilih negara lain.</p>
+</main>
+
+<section class="how" id="cara">
+  <h2>Cara belanja</h2>
+  <ol>
+    <li><b>Pilih bajumu</b><span>Klik "Tambah" pada baju favorit.</span></li>
+    <li><b>Isi alamat</b><span>Boleh checkout tanpa akun, atau masuk supaya datamu tersimpan.</span></li>
+    <li><b>Bayar</b><span>Transfer, e-wallet, atau bayar di tempat.</span></li>
+    <li><b>Tunggu paket</b><span>Kami kirim dalam 1–2 hari kerja.</span></li>
+  </ol>
+</section>
+
+<footer>
+  <p>🧸 Thriftie Trip · Thrift lucu, bumi senang.</p>
+  <p class="small">Pertanyaan? Chat kami di Instagram @thriftietrip</p>
+</footer>
+
+<div class="overlay" id="overlay" hidden></div>
+
+<aside class="drawer" id="drawer" aria-label="Keranjang" hidden>
+  <div class="drawer-head"><h3>Keranjangmu</h3><button class="x" data-close aria-label="Tutup">✕</button></div>
+  <div id="cartItems"></div>
+  <div class="drawer-foot">
+    <div class="row"><span>Subtotal</span><b id="subtotal">Rp0</b></div>
+    <button class="btn full" id="btnCheckout">Lanjut ke checkout</button>
+  </div>
+</aside>
+
+<div class="modal" id="authModal" hidden role="dialog" aria-modal="true" aria-labelledby="authTitle">
+  <button class="x" data-close aria-label="Tutup">✕</button>
+  <h3 id="authTitle">Masuk ke akunmu</h3>
+  <div class="tabs"><button class="on" data-tab="login">Masuk</button><button data-tab="register">Daftar</button></div>
+  <form id="authForm">
+    <label id="nameWrap" hidden>Nama<input name="name" autocomplete="name"></label>
+    <label>Email<input name="email" type="email" required autocomplete="email"></label>
+    <label>Kata sandi<input name="password" type="password" minlength="6" required autocomplete="current-password"></label>
+    <p class="err" id="authErr" role="alert"></p>
+    <button class="btn full" id="authSubmit">Masuk</button>
+  </form>
+</div>
+
+<div class="modal wide" id="checkoutModal" hidden role="dialog" aria-modal="true" aria-labelledby="coTitle">
+  <button class="x" data-close aria-label="Tutup">✕</button>
+  <h3 id="coTitle">Checkout</h3>
+  <form id="coForm">
+    <div class="two">
+      <label>Nama penerima<input name="name" required></label>
+      <label>No. WhatsApp<input name="phone" type="tel" required pattern="[0-9+ ]{9,15}"></label>
+    </div>
+    <label>Email<input name="email" type="email" required></label>
+    <label>Alamat lengkap<textarea name="address" rows="2" required></textarea></label>
+    <div class="two">
+      <label>Kota<input name="city" required></label>
+      <label>Kode pos<input name="zip" required pattern="[0-9]{5}"></label>
+    </div>
+    <div class="two">
+      <label>Pengiriman
+        <select name="ship"><option value="15000">Reguler (3–5 hari) · Rp15.000</option><option value="30000">Kilat (1–2 hari) · Rp30.000</option></select>
+      </label>
+      <label>Pembayaran
+        <select name="pay"><option>Transfer bank</option><option>E-wallet (QRIS)</option><option>Bayar di tempat (COD)</option></select>
+      </label>
+    </div>
+    <div class="sum" id="coSum"></div>
+    <button class="btn full">Buat pesanan</button>
+  </form>
+</div>
+
+<div class="modal" id="doneModal" hidden role="dialog" aria-modal="true">
+  <div class="done">
+    <div class="big">🎉</div>
+    <h3>Pesananmu masuk!</h3>
+    <p id="doneMsg"></p>
+    <button class="btn full" data-close>Lanjut belanja</button>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status"></div>
+<script src="app.js"></script>
+</body>
+</html>
