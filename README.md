@@ -12,7 +12,10 @@ Website marketplace thrift fashion dari mancanegara, dibuat dengan **HTML + CSS 
 - Keranjang belanja
 - Update quantity & remove item
 - Data keranjang tersimpan di `localStorage`
-- Login demo
+- **Login & Register yang dibedakan**
+- Status pengguna baru vs pengguna yang sudah login
+- Menu akun setelah login (My Account + Log out)
+- Profil member dengan nama/email/status
 - Checkout demo dengan alamat & pilihan pembayaran
 - Order ID otomatis
 - Newsletter form
@@ -51,7 +54,7 @@ thrift-global-market/
 
 ## 🔐 Tentang Login
 
-Login di versi ini adalah **demo front-end**. Email disimpan di browser menggunakan `localStorage`. Jangan gunakan sistem ini untuk menyimpan password atau data pelanggan sungguhan.
+Login/Register di versi ini adalah **demo front-end**. Pengunjung baru diarahkan ke mode pembuatan akun, sedangkan pengguna yang sudah login mendapatkan menu akun dan tombol logout. Email disimpan di browser menggunakan `localStorage`. Jangan gunakan sistem ini untuk menyimpan password atau data pelanggan sungguhan.
 
 Untuk website produksi, hubungkan login ke backend/authentication seperti Firebase Authentication, Supabase Auth, atau layanan backend sendiri.
 

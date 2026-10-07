@@ -23,7 +23,10 @@
     </nav>
     <div class="header-actions">
       <button class="icon-btn" id="searchBtn" aria-label="Cari">⌕</button>
-      <button class="icon-btn" id="loginBtn" aria-label="Login">♙</button>
+      <button class="account-btn" id="loginBtn" aria-label="Akun">
+        <span class="account-icon">♙</span>
+        <span id="accountLabel">Sign in</span>
+      </button>
       <button class="cart-btn" id="cartBtn">Bag <span id="cartCount">0</span></button>
     </div>
   </header>
@@ -122,16 +125,61 @@
   </aside>
 
   <div class="modal" id="authModal">
-    <div class="modal-card">
+    <div class="modal-card auth-card">
       <button class="close" data-close>×</button>
-      <p class="eyebrow">WELCOME TO THRIFTERRA</p>
-      <h2 id="authTitle">Sign in.</h2>
-      <form id="authForm">
-        <label>Email<input type="email" id="authEmail" required placeholder="you@email.com"></label>
-        <label>Password<input type="password" id="authPassword" required placeholder="••••••••"></label>
-        <button class="btn btn-dark full" type="submit">Continue →</button>
-      </form>
-      <p class="switch-auth">Demo account? Any valid email & 4+ character password works.</p>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" data-auth-tab="login">Already a member</button>
+        <button class="auth-tab" data-auth-tab="register">New here</button>
+      </div>
+
+      <div id="loginPanel" class="auth-panel">
+        <p class="eyebrow">WELCOME BACK</p>
+        <h2>Sign in.</h2>
+        <p class="auth-intro">Access your bag, account and saved shopping experience.</p>
+        <form id="loginForm">
+          <label>Email<input type="email" id="loginEmail" required placeholder="you@email.com"></label>
+          <label>Password<input type="password" id="loginPassword" minlength="4" required placeholder="••••••••"></label>
+          <button class="btn btn-dark full" type="submit">Sign in →</button>
+        </form>
+        <p class="auth-note">Demo: gunakan email apa saja yang valid dan password minimal 4 karakter.</p>
+      </div>
+
+      <div id="registerPanel" class="auth-panel hidden">
+        <p class="eyebrow">FIRST TIME HERE?</p>
+        <h2>Join us.</h2>
+        <p class="auth-intro">Buat akun untuk mendapatkan pengalaman thrift yang lebih personal.</p>
+        <form id="registerForm">
+          <label>Full name<input type="text" id="registerName" required placeholder="Your name"></label>
+          <label>Email<input type="email" id="registerEmail" required placeholder="you@email.com"></label>
+          <label>Password<input type="password" id="registerPassword" minlength="4" required placeholder="••••••••"></label>
+          <button class="btn btn-dark full" type="submit">Create account →</button>
+        </form>
+        <p class="auth-note">Akun demo disimpan hanya di browser perangkat ini.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="account-menu" id="accountMenu">
+    <div class="account-menu-head">
+      <span class="status-dot"></span>
+      <div><small>Signed in as</small><strong id="menuUserName">User</strong></div>
+    </div>
+    <button id="profileBtn">♙ My account</button>
+    <button id="logoutBtn">↪ Log out</button>
+  </div>
+
+  <div class="modal" id="profileModal">
+    <div class="modal-card profile-card">
+      <button class="close" data-close>×</button>
+      <p class="eyebrow">YOUR ACCOUNT</p>
+      <h2 id="profileName">Hello.</h2>
+      <div class="profile-info">
+        <div><span>NAME</span><strong id="profileEmail">—</strong></div>
+        <div><span>MEMBER STATUS</span><strong>THRIFTERRA MEMBER ✦</strong></div>
+        <div><span>SHOPPING BAG</span><strong id="profileBag">0 items</strong></div>
+      </div>
+      <button class="btn btn-dark full" data-close>Continue shopping →</button>
     </div>
   </div>
 

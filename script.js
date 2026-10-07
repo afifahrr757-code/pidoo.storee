@@ -55,38 +55,141 @@ function renderCart(){
     </div>`}).join("");
   const total=cart.reduce((s,x)=>s+(products.find(p=>p.id===x.id).price*x.qty),0);
   document.getElementById("cartSubtotal").textContent=rupiah(total);
-  document.getElementById("checkoutTotal").textContent=rupiah(total);
+  document.getElementById("checkoutTotal").textContent=rupiah(total); if(document.getElementById("profileBag")){ const u=JSON.parse(localStorage.getItem("thrifterraUser")||"null"); if(u) document.getElementById("profileBag").textContent=`${count} items`; }
 }
 function openCart(){document.getElementById("cartDrawer").classList.add("open");document.getElementById("overlay").classList.add("show")}
 function closeAll(){document.querySelectorAll(".drawer,.modal").forEach(x=>x.classList.remove("open","show"));document.getElementById("overlay").classList.remove("show")}
 function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2300)}
 function openAuth(){document.getElementById("authModal").classList.add("show");document.getElementById("overlay").classList.add("show")}
 document.addEventListener("DOMContentLoaded",()=>{
- renderProducts();renderCart();
- document.getElementById("filters").addEventListener("click",e=>{
-   const btn=e.target.closest(".filter");if(!btn)return;
-   document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));btn.classList.add("active");renderProducts(btn.dataset.category);
- });
- document.getElementById("cartBtn").onclick=openCart;
- document.getElementById("loginBtn").onclick=openAuth;
- document.getElementById("footerLogin").onclick=e=>{e.preventDefault();openAuth()};
- document.querySelectorAll("[data-close]").forEach(b=>b.onclick=closeAll);
- document.getElementById("overlay").onclick=closeAll;
- document.getElementById("searchBtn").onclick=()=>{document.getElementById("shop").scrollIntoView();toast("Use the collection filters to browse.")};
- document.querySelectorAll(".category-card").forEach(c=>c.onclick=e=>{e.preventDefault();const cat=c.dataset.jump;document.querySelector(`[data-category="${cat}"]`).click();document.getElementById("shop").scrollIntoView({behavior:"smooth"})});
- document.getElementById("authForm").onsubmit=e=>{
-   e.preventDefault();const email=document.getElementById("authEmail").value,pass=document.getElementById("authPassword").value;
-   if(pass.length<4)return toast("Password must be at least 4 characters.");
-   localStorage.setItem("thrifterraUser",email);closeAll();toast(`Welcome back, ${email.split("@")[0]}!`);
- };
- document.getElementById("checkoutBtn").onclick=()=>{
-   if(!cart.length)return toast("Your bag is empty.");
-   closeAll();document.getElementById("checkoutModal").classList.add("show");document.getElementById("overlay").classList.add("show");
- };
- document.getElementById("checkoutForm").onsubmit=e=>{
-   e.preventDefault();const order="THR-"+Date.now().toString().slice(-6);
-   cart=[];saveCart();renderCart();closeAll();toast(`Order ${order} placed successfully!`);
-   setTimeout(()=>alert(`Thank you! Your demo order ${order} has been placed. In a real deployment, connect this form to a payment/order backend.`),300);
- };
- document.getElementById("newsletterForm").onsubmit=e=>{e.preventDefault();e.target.reset();toast("You're on the list ✦")};
+  renderProducts();renderCart();updateAccountUI();
+
+  const authModal=document.getElementById("authModal");
+  const accountMenu=document.getElementById("accountMenu");
+  const overlay=document.getElementById("overlay");
+
+  function switchAuthTab(tab){
+    document.querySelectorAll(".auth-tab").forEach(b=>b.classList.toggle("active",b.dataset.authTab===tab));
+    document.getElementById("loginPanel").classList.toggle("hidden",tab!=="login");
+    document.getElementById("registerPanel").classList.toggle("hidden",tab!=="register");
+  }
+
+  function openAuth(tab="login"){
+    accountMenu.classList.remove("show");
+    authModal.classList.add("show");
+    overlay.classList.add("show");
+    switchAuthTab(tab);
+  }
+
+  function updateAccountUI(){
+    const user=JSON.parse(localStorage.getItem("thrifterraUser")||"null");
+    const label=document.getElementById("accountLabel");
+    const btn=document.getElementById("loginBtn");
+    if(user){
+      label.textContent=user.name.split(" ")[0];
+      btn.classList.add("logged-in");
+      document.getElementById("menuUserName").textContent=user.name;
+      document.getElementById("profileName").textContent=`Hello, ${user.name.split(" ")[0]}.`;
+      document.getElementById("profileEmail").textContent=user.email;
+      document.getElementById("profileBag").textContent=`${cart.reduce((s,x)=>s+x.qty,0)} items`;
+    }else{
+      label.textContent="Sign in";
+      btn.classList.remove("logged-in");
+    }
+  }
+
+  document.getElementById("filters").addEventListener("click",e=>{
+    const btn=e.target.closest(".filter");if(!btn)return;
+    document.querySelectorAll(".filter").forEach(b=>b.classList.remove("active"));
+    btn.classList.add("active");renderProducts(btn.dataset.category);
+  });
+
+  document.getElementById("cartBtn").onclick=openCart;
+
+  document.getElementById("loginBtn").onclick=()=>{
+    const user=JSON.parse(localStorage.getItem("thrifterraUser")||"null");
+    if(user){
+      accountMenu.classList.toggle("show");
+    }else{
+      openAuth("login");
+    }
+  };
+
+  document.getElementById("footerLogin").onclick=e=>{
+    e.preventDefault();
+    const user=JSON.parse(localStorage.getItem("thrifterraUser")||"null");
+    if(user) document.getElementById("profileModal").classList.add("show"),overlay.classList.add("show");
+    else openAuth("login");
+  };
+
+  document.querySelectorAll("[data-close]").forEach(b=>b.onclick=closeAll);
+  overlay.onclick=()=>{closeAll();accountMenu.classList.remove("show")};
+
+  document.querySelectorAll(".auth-tab").forEach(btn=>{
+    btn.onclick=()=>switchAuthTab(btn.dataset.authTab);
+  });
+
+  document.getElementById("searchBtn").onclick=()=>{
+    document.getElementById("shop").scrollIntoView({behavior:"smooth"});
+    toast("Use the collection filters to browse.");
+  };
+
+  document.querySelectorAll(".category-card").forEach(c=>c.onclick=e=>{
+    e.preventDefault();
+    const cat=c.dataset.jump;
+    document.querySelector(`[data-category="${cat}"]`).click();
+    document.getElementById("shop").scrollIntoView({behavior:"smooth"});
+  });
+
+  document.getElementById("loginForm").onsubmit=e=>{
+    e.preventDefault();
+    const email=document.getElementById("loginEmail").value.trim();
+    const pass=document.getElementById("loginPassword").value;
+    if(pass.length<4)return toast("Password must be at least 4 characters.");
+    const existing=JSON.parse(localStorage.getItem("thrifterraUser")||"null");
+    const name=existing && existing.email===email ? existing.name : email.split("@")[0];
+    localStorage.setItem("thrifterraUser",JSON.stringify({name,email}));
+    closeAll();updateAccountUI();toast(`Welcome back, ${name.split(" ")[0]}!`);
+  };
+
+  document.getElementById("registerForm").onsubmit=e=>{
+    e.preventDefault();
+    const name=document.getElementById("registerName").value.trim();
+    const email=document.getElementById("registerEmail").value.trim();
+    const pass=document.getElementById("registerPassword").value;
+    if(pass.length<4)return toast("Password must be at least 4 characters.");
+    localStorage.setItem("thrifterraUser",JSON.stringify({name,email}));
+    closeAll();updateAccountUI();toast(`Welcome to THRIFTERRA, ${name.split(" ")[0]}!`);
+  };
+
+  document.getElementById("profileBtn").onclick=()=>{
+    accountMenu.classList.remove("show");
+    updateAccountUI();
+    document.getElementById("profileModal").classList.add("show");
+    overlay.classList.add("show");
+  };
+
+  document.getElementById("logoutBtn").onclick=()=>{
+    localStorage.removeItem("thrifterraUser");
+    accountMenu.classList.remove("show");
+    updateAccountUI();
+    toast("You have been logged out.");
+  };
+
+  document.getElementById("checkoutBtn").onclick=()=>{
+    if(!cart.length)return toast("Your bag is empty.");
+    closeAll();document.getElementById("checkoutModal").classList.add("show");overlay.classList.add("show");
+  };
+
+  document.getElementById("checkoutForm").onsubmit=e=>{
+    e.preventDefault();
+    const order="THR-"+Date.now().toString().slice(-6);
+    cart=[];saveCart();renderCart();updateAccountUI();closeAll();
+    toast(`Order ${order} placed successfully!`);
+    setTimeout(()=>alert(`Thank you! Your demo order ${order} has been placed. In a real deployment, connect this form to a payment/order backend.`),300);
+  };
+
+  document.getElementById("newsletterForm").onsubmit=e=>{
+    e.preventDefault();e.target.reset();toast("You're on the list ✦");
+  };
 });
